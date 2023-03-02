@@ -4,13 +4,13 @@ from typing import List
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
-        result = {}
-        for anagram in strs:
-
-            sorted_anagram = ''.join(sorted(anagram))
-            if sorted_anagram in result:
-                result[sorted_anagram].append(anagram)
+        counter = {}
+        for word in strs:
+            sorted_word = "".join(sorted(word))
+            if sorted_word in counter:
+                counter[sorted_word].append(word)
             else:
-                result[sorted_anagram] = [anagram]
+                counter[sorted_word] = [word]
         
-        return [value for _, value in result.items()]
+        result = [value for value in counter.values()]
+        return result
