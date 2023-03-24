@@ -7,6 +7,8 @@ class Solution:
 
         left = 1
         right = max(piles)
+
+        # we know that the max in piles will work
         min_bananas_per_hour = right
         while left <= right:
             k_candidate = (right + left)//2
@@ -15,6 +17,7 @@ class Solution:
                 total += math.ceil(pile/k_candidate)
             
             if total <= h:
+                # update minimum bananas
                 min_bananas_per_hour = min(min_bananas_per_hour, k_candidate)
                 right = k_candidate - 1
             elif total > h:
