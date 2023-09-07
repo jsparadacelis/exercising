@@ -1,50 +1,46 @@
+from typing import List
+
+
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
 
-        if s == t:
-            return s
-        
-        if len(t) > len(s):
-            return ""
-
-        map_t = {}
+        res = [-1, -1]
+        # we count the frecuencies from t string
+        freq_t = {}
         for letter in t:
-            map_t[letter] = 1 + map_t.get(letter, 0)
-        
+            freq_t[letter] = 1 + freq_t.get(letter, 0)
         
         left = 0
-        window_map = {}
+        # we need unique letters lenght
+        need = len(freq_t)
         have = 0
-        need = len(set(t))
-        len_res = float("inf")
-        res = [-1, -1]
+        freq_s = {}
+        current_shortest = float("inf")
         for right in range(len(s)):
 
+            # frequencies for the window
             letter = s[right]
-            window_map[letter] = 1 + window_map.get(letter, 0)
-            
-            if letter in map_t and window_map[letter] == map_t[letter]:
+            freq_s[letter] = 1 + freq_s.get(letter, 0)
+            # if frecuencies match between the two maps
+            # we reached a "have"
+            if letter in freq_t and freq_s[letter] == freq_t[letter]:
                 have += 1
             
             while have == need:
-                
-                possible_new_len_res = right - left + 1
-                if possible_new_len_res < len_res:
+
+                len_window = right - left + 1
+                if len_window < current_shortest:
                     res = [left, right]
-                    len_res = possible_new_len_res
-                
-                window_map[s[left]] -= 1
-                if s[left] in map_t and window_map[s[left]] < map_t[s[left]]:
+                    current_shortest = len_window
+                # reduce window
+                freq_s[s[left]] -= 1
+                if s[left] in freq_t and freq_s[s[left]] < freq_t[s[left]]:
                     have -= 1
                 left += 1
-
-        l, r = res
-        return s[l:r+1] if len_res != float("inf") else ""
-                
+        return s[res[0]:res[1]+1] if current_shortest != float("inf") else ""
 
 if __name__ == '__main__':
-    
-    sol = Solution()
-    s = "BBAA"
-    t = "ABA"
-    print(sol.minWindow(s, t))
+    solution = Solution()
+    s = "ADOBECODEBANC"
+    t = "ABC"
+    solution.minWindow(s=s, t=t)
