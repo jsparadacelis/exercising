@@ -33,12 +33,6 @@ class Solution:
         return head.next
 
 
-
-            
-
-
-
-
 if __name__ == "__main__":
     list1 = ListNode(2, ListNode(5, ListNode(7)))
     list2 = ListNode(3, ListNode(11))
