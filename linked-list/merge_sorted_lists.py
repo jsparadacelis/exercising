@@ -15,7 +15,7 @@ class Solution:
         
 
         dummy = ListNode()
-        head = tail
+        head = dummy
         while list1 and list2:
 
             if list1.val < list2.val:
